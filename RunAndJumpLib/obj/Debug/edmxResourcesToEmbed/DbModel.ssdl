@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RunAndJumpDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Avatars">
+    <Key>
+      <PropertyRef Name="AvatarId" />
+    </Key>
+    <Property Name="AvatarId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Path" Type="nvarchar" MaxLength="500" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Levels">
+    <Key>
+      <PropertyRef Name="LevelId" />
+    </Key>
+    <Property Name="LevelId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LevelName" Type="nvarchar" MaxLength="50" />
+    <Property Name="MaxCoins" Type="int" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="AvatarId" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'RunAndJumpDb.dbo.Users2levels' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Users2levels">
+    <Key>
+      <PropertyRef Name="User2Level" />
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="LevelId" />
+    </Key>
+    <Property Name="User2Level" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CountCoins" Type="int" />
+    <Property Name="Pass" Type="bit" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="LevelId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Users_Avatars">
+    <End Role="Avatars" Type="Self.Avatars" Multiplicity="0..1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Avatars">
+        <PropertyRef Name="AvatarId" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="AvatarId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users2levels_Levels">
+    <End Role="Levels" Type="Self.Levels" Multiplicity="1" />
+    <End Role="Users2levels" Type="Self.Users2levels" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Levels">
+        <PropertyRef Name="LevelId" />
+      </Principal>
+      <Dependent Role="Users2levels">
+        <PropertyRef Name="LevelId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users2levels_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Users2levels" Type="Self.Users2levels" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Users2levels">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="RunAndJumpDbModelStoreContainer">
+    <EntitySet Name="Avatars" EntityType="Self.Avatars" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Levels" EntityType="Self.Levels" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users2levels" EntityType="Self.Users2levels" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Users2levels].[User2Level] AS [User2Level], 
+    [Users2levels].[CountCoins] AS [CountCoins], 
+    [Users2levels].[Pass] AS [Pass], 
+    [Users2levels].[UserId] AS [UserId], 
+    [Users2levels].[LevelId] AS [LevelId]
+    FROM [dbo].[Users2levels] AS [Users2levels]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Users_Avatars" Association="Self.FK_Users_Avatars">
+      <End Role="Avatars" EntitySet="Avatars" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users2levels_Levels" Association="Self.FK_Users2levels_Levels">
+      <End Role="Levels" EntitySet="Levels" />
+      <End Role="Users2levels" EntitySet="Users2levels" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users2levels_Users" Association="Self.FK_Users2levels_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Users2levels" EntitySet="Users2levels" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,12 @@
+C:\Projects\RunAndJumpLib\bin\Debug\RunAndJumpLib.dll.config
+C:\Projects\RunAndJumpLib\bin\Debug\RunAndJumpLib.dll
+C:\Projects\RunAndJumpLib\bin\Debug\RunAndJumpLib.pdb
+C:\Projects\RunAndJumpLib\bin\Debug\EntityFramework.dll
+C:\Projects\RunAndJumpLib\bin\Debug\EntityFramework.SqlServer.dll
+C:\Projects\RunAndJumpLib\bin\Debug\EntityFramework.xml
+C:\Projects\RunAndJumpLib\bin\Debug\EntityFramework.SqlServer.xml
+C:\Projects\RunAndJumpLib\obj\Debug\RunAndJumpLib.csproj.CoreCompileInputs.cache
+C:\Projects\RunAndJumpLib\obj\Debug\RunAndJumpLib.csproj.CopyComplete
+C:\Projects\RunAndJumpLib\obj\Debug\RunAndJumpLib.dll
+C:\Projects\RunAndJumpLib\obj\Debug\RunAndJumpLib.pdb
+C:\Projects\RunAndJumpLib\obj\Debug\RunAndJumpLib.csprojAssemblyReference.cache

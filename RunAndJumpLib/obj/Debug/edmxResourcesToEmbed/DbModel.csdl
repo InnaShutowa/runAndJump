@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RunAndJumpDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Avatars">
+    <Key>
+      <PropertyRef Name="AvatarId" />
+    </Key>
+    <Property Name="AvatarId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Path" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Users" Relationship="RunAndJumpDbModel.FK_Users_Avatars" FromRole="Avatars" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Levels">
+    <Key>
+      <PropertyRef Name="LevelId" />
+    </Key>
+    <Property Name="LevelId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LevelName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MaxCoins" Type="Int32" />
+    <NavigationProperty Name="Users2levels" Relationship="RunAndJumpDbModel.FK_Users2levels_Levels" FromRole="Levels" ToRole="Users2levels" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AvatarId" Type="Int32" />
+    <NavigationProperty Name="Avatars" Relationship="RunAndJumpDbModel.FK_Users_Avatars" FromRole="Users" ToRole="Avatars" />
+    <NavigationProperty Name="Users2levels" Relationship="RunAndJumpDbModel.FK_Users2levels_Users" FromRole="Users" ToRole="Users2levels" />
+  </EntityType>
+  <EntityType Name="Users2levels">
+    <Key>
+      <PropertyRef Name="User2Level" />
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="LevelId" />
+    </Key>
+    <Property Name="User2Level" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CountCoins" Type="Int32" />
+    <Property Name="Pass" Type="Boolean" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="LevelId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Levels" Relationship="RunAndJumpDbModel.FK_Users2levels_Levels" FromRole="Users2levels" ToRole="Levels" />
+    <NavigationProperty Name="Users" Relationship="RunAndJumpDbModel.FK_Users2levels_Users" FromRole="Users2levels" ToRole="Users" />
+  </EntityType>
+  <EntityContainer Name="RunAndJumpDbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Avatars" EntityType="Self.Avatars" />
+    <EntitySet Name="Levels" EntityType="Self.Levels" />
+    <EntitySet Name="Users" EntityType="Self.Users" />
+    <EntitySet Name="Users2levels" EntityType="Self.Users2levels" />
+    <AssociationSet Name="FK_Users_Avatars" Association="RunAndJumpDbModel.FK_Users_Avatars">
+      <End Role="Avatars" EntitySet="Avatars" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users2levels_Levels" Association="RunAndJumpDbModel.FK_Users2levels_Levels">
+      <End Role="Levels" EntitySet="Levels" />
+      <End Role="Users2levels" EntitySet="Users2levels" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users2levels_Users" Association="RunAndJumpDbModel.FK_Users2levels_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Users2levels" EntitySet="Users2levels" />
+    </AssociationSet>
+  </EntityContainer>
+  <Association Name="FK_Users_Avatars">
+    <End Type="RunAndJumpDbModel.Avatars" Role="Avatars" Multiplicity="0..1" />
+    <End Type="RunAndJumpDbModel.Users" Role="Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Avatars">
+        <PropertyRef Name="AvatarId" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="AvatarId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users2levels_Levels">
+    <End Type="RunAndJumpDbModel.Levels" Role="Levels" Multiplicity="1" />
+    <End Type="RunAndJumpDbModel.Users2levels" Role="Users2levels" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Levels">
+        <PropertyRef Name="LevelId" />
+      </Principal>
+      <Dependent Role="Users2levels">
+        <PropertyRef Name="LevelId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users2levels_Users">
+    <End Type="RunAndJumpDbModel.Users" Role="Users" Multiplicity="1" />
+    <End Type="RunAndJumpDbModel.Users2levels" Role="Users2levels" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Users2levels">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
